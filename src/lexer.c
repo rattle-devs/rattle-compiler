@@ -19,7 +19,7 @@ void lexer_advance(lexer_T* lexer){
 }
 
 void lexer_skip_whitespace(lexer_T* lexer){
-	while(lexer->c == ' ' || lexer->c == )
+	while(lexer->c == ' ' || lexer->c == '\t' )
 		lexer_advance(lexer)
 }
 
