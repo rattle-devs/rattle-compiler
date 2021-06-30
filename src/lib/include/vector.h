@@ -12,6 +12,8 @@ Vector* init_vector(size_t initialSize);
 
 void insertVector(Vector *v, char c);
 
+char* getVectorValue(Vector *v);
+
 void freeVector(Vector *v);
 
 #endif 
