@@ -11,8 +11,8 @@ typedef struct TOKEN_STRUCT{
 		TOKEN_LITERAL,
 		TOKEN_COMMENT,
 		TOKEN_EOF
-	} type
-} token_T
+	} type;
+} token_T;
 
-token_T* init_token(char * value, int type)
+token_T* init_token(char * value, int type);
 #endif

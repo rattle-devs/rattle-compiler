@@ -1,12 +1,14 @@
 #include <string.h>
 #include <ctype.h>
+#include <stdlib.h>
 #include "include/lexer.h"
+#include "include/token.h"
 #include "lib/include/vector.h"
 
 lexer_T* init_lexer(char* src){
 	lexer_T* lexer = calloc(1, sizeof(struct LEXER_STRUCT));
 	lexer->src = src;
-	lexer->src_size = strlen(src)
+	lexer->src_size = strlen(src);
 	lexer->i = 0;
 	lexer->c = lexer->src[lexer->i];
 
@@ -27,23 +29,27 @@ void lexer_skip_whitespace(lexer_T* lexer){
 		lexer_advance(lexer);
 }
 
+token_T* lexer_parse_comment(lexer_T* lexer){
+	return init_token(NULL, TOKEN_COMMENT);
+}
+
 token_T* lexer_parse_token(lexer_T* lexer){
-	Vector v = init_vector(1);
+	Vector* v = init_vector(1);
 	
 	if(lexer->c == '#'){
-		lexer_skip_comment
+		lexer_parse_comment(lexer);
 	}
-	while(!isspace(lexer->c) && lexer-> != '#'){
+	while(!isspace(lexer->c) && lexer->c != '#'){
 		insertVector(v, lexer->c);
 		lexer_advance(lexer);
 	}
 
-
+	return init_token(getVectorValue(v), TOKEN_IDENTIFIER);
 }
 
 token_T* lexer_next_token(lexer_T* lexer){
 	while(lexer->c != '\0'){
-		if(!space(token->c)){
+		if(!isspace(lexer->c)){
 			
 		}
 	}

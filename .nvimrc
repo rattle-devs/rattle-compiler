@@ -7,6 +7,6 @@ highlight ColorColumn guibg=#3B3E4C
 
 augroup project
   autocmd!
-  autocmd BufRead,BufNewFile *.h,*.c set filetype=c.doxygen
+  autocmd BufRead,BufNewFile *.h,*.c set filetype=c
 augroup END
 
