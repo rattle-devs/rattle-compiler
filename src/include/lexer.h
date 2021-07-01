@@ -20,7 +20,9 @@ void lexer_skip_whitespace(lexer_T* lexer);
 
 token_T* lexer_parse_comment(lexer_T* lexer);
 
-token_T* lexer_parse_token(lexer_T* lexer);
+token_T* lexer_parse_alphanumeric(lexer_T* lexer);
+
+token_T* lexer_parse_symbol(lexer_T* lexer);
 
 token_T* lexer_next_token(lexer_T* lexer);
 

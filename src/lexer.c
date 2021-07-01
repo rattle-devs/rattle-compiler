@@ -22,15 +22,14 @@ void lexer_advance(lexer_T* lexer){
 	}
 }
 
-token_T* lexer_advance_with(lexer_T* lexer, token_T* token);
+token_T* lexer_advance_with(lexer_T* lexer, token_T* token){
+	lexer_advance(lexer);
+	return token;
+}
 
 void lexer_skip_whitespace(lexer_T* lexer){
 	while(lexer->c == ' ' || lexer->c == '\t' )
 		lexer_advance(lexer);
-}
-
-token_T* lexer_parse_comment(lexer_T* lexer){
-	return init_token(NULL, TOKEN_COMMENT);
 }
 
 token_T* lexer_parse_token(lexer_T* lexer){
@@ -50,7 +49,7 @@ token_T* lexer_parse_token(lexer_T* lexer){
 token_T* lexer_next_token(lexer_T* lexer){
 	while(lexer->c != '\0'){
 		if(!isspace(lexer->c)){
-			
+			return lexer_advance_with(lexer, lexer_parse_token(lexer));	
 		}
 	}
 	return init_token(0, TOKEN_EOF);

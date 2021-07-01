@@ -2,14 +2,13 @@
 #include "lib/include/vector.h"
 
 int main() {
-	Vector* v = init_vector(2);
+	Vector* v = vector_init(0, sizeof(char));
 	for (char i = 33; i < 127; i++)
-		insertVector(v, i);
+		vector_append(v, &i, 1);
 
-	printf("%c\n", v->array[65]);
-	printf("%s\n", getVectorValue(v));
-	printf("%ld\n", v->size);
-	freeVector(v);
+	printf("%c\n", v->data[65]);
+	printf("%ld\n", v->reserved_size);
+	vector_free(v);
 
 
 	printf("Hello World!\n");
