@@ -6,9 +6,9 @@ int main() {
 	for (char i = 33; i < 127; i++)
 		vector_append(v, &i, 1);
 
+	printf("%s\n", vector_value(v));
 	printf("%c\n", v->data[65]);
 	printf("%ld\n", v->reserved_size);
-	printf("%s\n", vector_value(v));
 	vector_free(v);
 
 

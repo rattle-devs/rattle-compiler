@@ -11,7 +11,6 @@ lexer_T* init_lexer(char* src){
 	lexer->src_size = strlen(src);
 	lexer->i = 0;
 	lexer->c = lexer->src[lexer->i];
-
 	return lexer;
 }
 
