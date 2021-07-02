@@ -1,4 +1,4 @@
 #ifndef TPYTHON_H
 #define TPYTHON_H
 void tpython_compile(char* src);
-#endif
+#endif //TPYTHON_H

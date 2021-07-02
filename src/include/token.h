@@ -15,4 +15,4 @@ typedef struct TOKEN_STRUCT{
 } token_T;
 
 token_T* init_token(char * value, int type);
-#endif
+#endif //TPYTHON_TOKEN_H

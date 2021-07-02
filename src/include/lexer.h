@@ -2,12 +2,15 @@
 #define TPYTHON_LEXER_H
 #include "token.h"
 #include <stdio.h>
+#include <stdbool.h>
 
 typedef struct LEXER_STRUCT{
 	char* src;
 	size_t src_size;
 	char c;
 	size_t i;
+	bool new_line;
+	size_t current_indent;
 } lexer_T;
 
 lexer_T* init_lexer(char* src);
@@ -27,4 +30,4 @@ token_T* lexer_parse_symbol(lexer_T* lexer);
 token_T* lexer_next_token(lexer_T* lexer);
 
 
-#endif 
+#endif // TPYTHON_LEXER_H 

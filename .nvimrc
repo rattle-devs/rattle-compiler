@@ -10,7 +10,7 @@ augroup project
   autocmd BufRead,BufNewFile *.h,*.c set filetype=c
 augroup END
 
-set foldmethod=syntax
+set foldmethod=indent
 set foldlevel=0
 set foldclose=all
 set fillchars=fold:\ 

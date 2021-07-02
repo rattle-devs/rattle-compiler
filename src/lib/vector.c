@@ -51,9 +51,11 @@ void* vector_data(Vector* v){
 
 char* vector_value(Vector *v){
 	vector_realloc(v, vector_size(v) + 1);
-	int i = 0;
+	const int i = 0;
 	vector_append(v, &i, 1);
-	return v->data;
+	char* data = v->data;
+	free(v);
+	return data;
 }
 
 size_t vector_size(const Vector* v) {
@@ -87,3 +89,4 @@ bool vector_append(Vector* v, const void* values, size_t count){
 	v->count = count_new;
 	return true;
 }
+
