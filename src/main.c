@@ -1,3 +1,4 @@
+#define __USE_MINGW_ANSI_STDIO 1
 #include <stdio.h>
 #include "lib/include/vector.h"
 
@@ -8,7 +9,7 @@ int main() {
 
 	printf("%s\n", vector_value(v));
 	printf("%c\n", v->data[65]);
-	printf("%ld\n", v->reserved_size);
+	printf("%zu\n", v->reserved_size);
 	vector_free(v);
 
 
