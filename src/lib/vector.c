@@ -48,13 +48,17 @@ void vector_free(Vector *v){
 void* vector_data(Vector* v){
 	return v->data;
 }
-/*
-void* vector_value(Vector *v){
-	v->array[v->used++] = '\0';
-	v->size = v->used;
-	v->array = realloc(v->array, v->size * sizeof(char));
-	return v->array;
-}*/
+
+char* vector_value(Vector *v){
+	vector_realloc(v, vector_size(v) + 1);
+	int i = 0;
+	vector_append(v, &i, 1);
+	return v->data;
+}
+
+size_t vector_size(const Vector* v) {
+  return v->count * v->element_size;
+}
 
 size_t vector_max_count(const Vector* v){
 	return v->reserved_size / v->element_size;

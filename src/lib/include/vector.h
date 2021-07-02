@@ -18,7 +18,12 @@ void vector_free(Vector* v);
 
 void* vector_data(Vector* v);
 
+char* vector_value(Vector* v);
+
+size_t vector_size(const Vector* v);
+
 size_t vector_max_count(const Vector* v);
 
 bool vector_append(Vector* v, const void* values, size_t count);
-#endif 
+
+#endif //LIB_VECTOR_H

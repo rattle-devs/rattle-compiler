@@ -33,17 +33,17 @@ void lexer_skip_whitespace(lexer_T* lexer){
 }
 
 token_T* lexer_parse_token(lexer_T* lexer){
-	Vector* v = init_vector(1);
+	Vector* v = vector_init(1, sizeof(char));
 	
 	if(lexer->c == '#'){
 		lexer_parse_comment(lexer);
 	}
 	while(!isspace(lexer->c) && lexer->c != '#'){
-		insertVector(v, lexer->c);
+		vector_append(v, &lexer->c, 1);
 		lexer_advance(lexer);
 	}
 
-	return init_token(getVectorValue(v), TOKEN_IDENTIFIER);
+	return init_token(vector_value(v), TOKEN_IDENTIFIER);
 }
 
 token_T* lexer_next_token(lexer_T* lexer){

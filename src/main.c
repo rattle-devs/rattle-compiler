@@ -8,6 +8,7 @@ int main() {
 
 	printf("%c\n", v->data[65]);
 	printf("%ld\n", v->reserved_size);
+	printf("%s\n", vector_value(v));
 	vector_free(v);
 
 
