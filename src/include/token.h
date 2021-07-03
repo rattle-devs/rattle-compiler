@@ -18,5 +18,7 @@ typedef struct TOKEN_STRUCT{
 	} type;
 } token_T;
 
-token_T* init_token(char * value, int type);
+token_T* token_init(char * value, size_t type);
+
+void token_print(token_T* token);
 #endif //TPYTHON_TOKEN_H

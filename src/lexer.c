@@ -66,7 +66,7 @@ token_T* lexer_parse_indent(lexer_T* lexer){
 				}
 				if(lexer->c != ' ' && counter != 0){
 					char* error = "Indentation not divisible by 4";
-					return init_token(error, TOKEN_ERROR);
+					return token_init(error, TOKEN_ERROR);
 				}
 			}
 		}
@@ -75,13 +75,13 @@ token_T* lexer_parse_indent(lexer_T* lexer){
 	while(lexer->line_indent < lexer->current_indent){
 		lexer->current_indent--;
 		char* cr = "\r";
-		return init_token(cr, TOKEN_SEPARATOR);
+		return token_init(cr, TOKEN_SEPARATOR);
 	}
     //indent level one higher - indicated as separator '\t'
 	while(lexer->line_indent > lexer->current_indent){
 		lexer->current_indent++;
 		char* ht = "\t";
-		return init_token(ht, TOKEN_SEPARATOR);
+		return token_init(ht, TOKEN_SEPARATOR);
 	}
     //no indentation change
 	if(lexer->line_indent == lexer->current_indent){
@@ -90,7 +90,7 @@ token_T* lexer_parse_indent(lexer_T* lexer){
 		return NULL;
 	}
 	char* error = "Unknown indentation error";
-	return init_token(error, TOKEN_ERROR);
+	return token_init(error, TOKEN_ERROR);
 }
 //TODO: comments not matching indentation level should not fuck up the whole lexer
 token_T* lexer_parse_comment(lexer_T* lexer){
@@ -99,16 +99,21 @@ token_T* lexer_parse_comment(lexer_T* lexer){
 		vector_append(comment, &lexer->c, 1);
 		lexer_advance(lexer);
 	}
-	return init_token(vector_value(comment), TOKEN_COMMENT);
+	return token_init(vector_value(comment), TOKEN_COMMENT);
 }
 
 token_T* lexer_parse_alphanumeric(lexer_T* lexer){ //TODO: implement an actual function
 	Vector* text = vector_init(2, sizeof(char));
-	while (isalnum(lexer->c)) {
+	size_t token_type = TOKEN_IDENTIFIER;
+	if (isdigit(lexer->c) || lexer->c == '.' || lexer->c == '\"') {
+        token_type = TOKEN_LITERAL;
+    }
+	while (!isspace(lexer->c)) {
 		vector_append(text, &lexer->c, 1);
 		lexer_advance(lexer);
 	}
-	return init_token(vector_value(text), TOKEN_IDENTIFIER); 
+	char* vec_val = (char*) vector_value(text);
+	return token_init(vec_val, token_type);
 }
 
 //main function for token parsing
@@ -132,20 +137,20 @@ token_T* lexer_parse_token(lexer_T* lexer){
 	}
 	if(lexer->c == '\n'){
 		char* nl = "\n";
-		return lexer_advance_with(lexer, init_token(nl, TOKEN_SEPARATOR));
+		return lexer_advance_with(lexer, token_init(nl, TOKEN_SEPARATOR));
 	}
 	if(lexer->c == '(' || lexer->c == ')' || lexer->c == '[' || lexer->c == ']'){
 		char* ch = calloc(1, sizeof(char));
 		memcpy(ch, &lexer->c,sizeof(char));
-		return lexer_advance_with(lexer, init_token(ch, TOKEN_SEPARATOR));
+		return lexer_advance_with(lexer, token_init(ch, TOKEN_SEPARATOR));
 	}
 	char* err = "?";
-	return lexer_advance_with(lexer, init_token(err, lexer->c));
+	return lexer_advance_with(lexer, token_init(err, lexer->c));
 }
 
 token_T* lexer_next_token(lexer_T* lexer){
 	while(lexer->c != '\0'){
 		return lexer_parse_token(lexer);
 	}
-	return init_token(0, TOKEN_EOF);
+	return token_init("\0", TOKEN_EOF);
 }
