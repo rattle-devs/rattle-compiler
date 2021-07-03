@@ -25,7 +25,6 @@ int main() {
 
 	tpython_compile(code);
 
-	free(code);
 	printf("Hello World!\n");
 	return 0;
 }
