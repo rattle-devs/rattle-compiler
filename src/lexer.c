@@ -13,6 +13,8 @@ lexer_T* lexer_init(char* src, bool use_tab){
 	lexer->use_tab = use_tab;
 	lexer->i = 0;
 	lexer->c = lexer->src[lexer->i];
+	lexer->current_indent = 0;
+	lexer->line_indent = 0;
 	return lexer;
 }
 
@@ -34,40 +36,44 @@ void lexer_skip_whitespace(lexer_T* lexer){
 }
 
 token_T* lexer_parse_indent(lexer_T* lexer){
-	size_t line_indent = 0;
-	if(lexer->use_tab){
-		while (lexer->c == '\t') {
-			line_indent++;
-			lexer_advance(lexer);
-		}
-	}if(!lexer->use_tab){
-		char counter = 0;
-		while (lexer->c == ' ') {
-			counter++;
-			lexer_advance(lexer);
-			if(counter == 4){
-				counter = 0;
-				line_indent++;
+	if(lexer->current_indent == 0){
+
+		if(lexer->use_tab){
+			while (lexer->c == '\t') {
+				lexer->line_indent++;
+				lexer_advance(lexer);
 			}
-			if(lexer->c != ' ' && counter != 0){
-				char* error = "Indentation not divisible by 4";
-				return init_token(error, TOKEN_ERROR);
+		}if(!lexer->use_tab){
+			char counter = 0;
+			while (lexer->c == ' ') {
+				counter++;
+				lexer_advance(lexer);
+				if(counter == 4){
+					counter = 0;
+				lexer->line_indent++;
+				}
+				if(lexer->c != ' ' && counter != 0){
+					char* error = "Indentation not divisible by 4";
+					return init_token(error, TOKEN_ERROR);
+				}
 			}
 		}
 	}
 
-	if(line_indent + 1 == lexer->current_indent){
-		lexer->current_indent = line_indent;
+	while(lexer->line_indent < lexer->current_indent){
+		lexer->current_indent--;
 		char* cr = "\r";
 		return init_token(cr, TOKEN_SEPARATOR);
 	}
-	if(line_indent == lexer->current_indent){
-		return NULL;
-	}
-	if(line_indent - 1 == lexer->current_indent){
-		lexer->current_indent = line_indent;
+	if(lexer->line_indent - 1 == lexer->current_indent){
+		lexer->current_indent++;
 		char* ht = "\t";
 		return init_token(ht, TOKEN_SEPARATOR);
+	}
+	if(lexer->line_indent == lexer->current_indent){
+		lexer->new_line = false;
+		lexer->line_indent = 0;
+		return NULL;
 	}
 	char* error = "Unknown indentation error";
 	return init_token(error, TOKEN_ERROR);
@@ -90,7 +96,6 @@ token_T* lexer_parse_alphanumeric(lexer_T* lexer){ //TODO implenet actual functi
 
 token_T* lexer_parse_token(lexer_T* lexer){
 	if(lexer->new_line){
-		lexer->new_line = false;
 		token_T* result = lexer_parse_indent(lexer);
 		if(result != NULL){
 			return result;

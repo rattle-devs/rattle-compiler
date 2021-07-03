@@ -9,6 +9,7 @@ typedef struct LEXER_STRUCT{
 	size_t src_size;
 	size_t i; // current place
 	size_t current_indent;
+	size_t line_indent;
 	bool use_tab;
 	char c;
 	bool new_line;
