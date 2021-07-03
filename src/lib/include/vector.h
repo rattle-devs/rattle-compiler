@@ -14,10 +14,22 @@ bool vector_realloc(Vector* v, size_t new_count);
 
 Vector* vector_init(size_t count_of_elements, size_t size_of_element);
 
+// Release memory
 void vector_free(Vector* v);
 
+// Returns the item at index position in the vector.
+void* vector_at(Vector* v, size_t index);
+
+// Returns the first item in the vector.
+void* vector_front(Vector* v);
+
+// Returns the last item in the vector.
+void* vector_back(Vector* v);
+
+// Returns a pointer to the data stored in the vector. The pointer can be used to access and modify the items in the vector.
 void* vector_data(Vector* v);
 
+// Returns a pointer to the data stored in the vector. The vector is destryed
 void* vector_value(Vector* v);
 
 size_t vector_size(const Vector* v);

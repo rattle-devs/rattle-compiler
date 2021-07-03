@@ -45,6 +45,22 @@ void vector_free(Vector *v){
 	free(v);
 }
 
+// ----------------------------------------------------------------------------
+
+// Element access
+
+void* vector_at(Vector* v, size_t index){
+	return v->data + index * v->element_size;
+}
+
+void* vector_front(Vector* v){
+	return v->data;
+}
+
+void* vector_back(Vector* v){
+	return v->data + (v->count - 1) * v->element_size;
+}
+
 void* vector_data(Vector* v){
 	return v->data;
 }
@@ -57,6 +73,8 @@ void* vector_value(Vector *v){
 	free(v);
 	return data;
 }
+
+// ----------------------------------------------------------------------------
 
 size_t vector_size(const Vector* v) {
   return v->count * v->element_size;
