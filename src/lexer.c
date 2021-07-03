@@ -116,6 +116,9 @@ token_T* lexer_parse_alphanumeric(lexer_T* lexer){ //TODO: implement an actual f
 	if (is_literal(vec_val)){
 	    token_type = TOKEN_LITERAL;
 	}
+	if (is_keyword(vec_val)){
+	    token_type = TOKEN_KEYWORD;
+	}
 	return token_init(vec_val, token_type);
 }
 
