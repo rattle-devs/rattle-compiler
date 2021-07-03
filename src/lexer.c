@@ -35,16 +35,18 @@ void lexer_skip_whitespace(lexer_T* lexer){
 		lexer_advance(lexer);
 }
 
+//returns '\r' when indentation level falls back, '\t' when it advances, NULL when is stays the same, otherwise error
 token_T* lexer_parse_indent(lexer_T* lexer){
 	if(lexer->current_indent == 0){
 
-		if(lexer->use_tab){
+		if(lexer->use_tab){ //source code uses tabs
 			while (lexer->c == '\t') {
 				lexer->line_indent++;
 				lexer_advance(lexer);
 			}
-		}if(!lexer->use_tab){
-			char counter = 0;
+		}if(!lexer->use_tab){ //source code doesn't use tabs for indentation
+
+            char counter = 0;
 			while (lexer->c == ' ') {
 				counter++;
 				lexer_advance(lexer);
@@ -65,11 +67,13 @@ token_T* lexer_parse_indent(lexer_T* lexer){
 		char* cr = "\r";
 		return init_token(cr, TOKEN_SEPARATOR);
 	}
+    //indent level one higher - indicated as separator '\t'
 	if(lexer->line_indent - 1 == lexer->current_indent){
 		lexer->current_indent++;
 		char* ht = "\t";
 		return init_token(ht, TOKEN_SEPARATOR);
 	}
+    //no indentation change
 	if(lexer->line_indent == lexer->current_indent){
 		lexer->new_line = false;
 		lexer->line_indent = 0;
@@ -78,7 +82,7 @@ token_T* lexer_parse_indent(lexer_T* lexer){
 	char* error = "Unknown indentation error";
 	return init_token(error, TOKEN_ERROR);
 }
-
+//TODO: comments not matching indentation level should not fuck up the whole lexer
 token_T* lexer_parse_comment(lexer_T* lexer){
 	Vector* comment = vector_init(2, sizeof(char));
 	while (lexer->c != '\n') {
@@ -88,13 +92,15 @@ token_T* lexer_parse_comment(lexer_T* lexer){
 	return init_token(vector_value(comment), TOKEN_COMMENT);
 }
 
-token_T* lexer_parse_alphanumeric(lexer_T* lexer){ //TODO implenet actual function
+token_T* lexer_parse_alphanumeric(lexer_T* lexer){ //TODO: implement an actual function
 	Vector* text = vector_init(2, sizeof(char));
 
 	return init_token(vector_value(text), TOKEN_IDENTIFIER); 
 }
 
+//main function for token parsing
 token_T* lexer_parse_token(lexer_T* lexer){
+    //NOTE: line zero is a newline
 	if(lexer->new_line){
 		token_T* result = lexer_parse_indent(lexer);
 		if(result != NULL){
@@ -118,7 +124,7 @@ token_T* lexer_parse_token(lexer_T* lexer){
 token_T* lexer_next_token(lexer_T* lexer){
 	while(lexer->c != '\0'){
 		if(!isspace(lexer->c)){
-			return lexer_advance_with(lexer, lexer_parse_token(lexer));	
+			return lexer_parse_token(lexer);
 		}
 	}
 	return init_token(0, TOKEN_EOF);
