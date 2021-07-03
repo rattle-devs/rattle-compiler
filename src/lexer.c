@@ -35,7 +35,7 @@ token_T* lexer_advance_with(lexer_T* lexer, token_T* token){
 }
 
 void lexer_skip_whitespace(lexer_T* lexer){
-	while(lexer->c == ' ' || lexer->c == '\t' )
+	while(lexer->c == ' ' || lexer->c == '\t' || lexer->c == '\r' )
 		lexer_advance(lexer);
 }
 
@@ -97,7 +97,7 @@ token_T* lexer_parse_indent(lexer_T* lexer){
 //TODO: comments not matching indentation level should not fuck up the whole lexer
 token_T* lexer_parse_comment(lexer_T* lexer){
 	Vector* comment = vector_init(2, sizeof(char));
-	while (lexer->c != '\n' && lexer->c != '\0') {
+	while (lexer->c != '\n' && lexer->c != '\0' && lexer->c != '\r') {
 		vector_append(comment, &lexer->c, 1);
 		lexer_advance(lexer);
 	}
