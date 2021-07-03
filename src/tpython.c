@@ -5,7 +5,7 @@
 #include "lib/include/vector.h"
 
 void tpython_compile(char* file_path){ // finally file patch currently string
-	token_T** tokens = tpython_run_lexer(file_path);
+	/*token_T** tokens =*/ tpython_run_lexer(file_path);
 	
 }
 
@@ -15,10 +15,10 @@ token_T** tpython_run_lexer(char* src){
 	token_T* current_token = NULL;
 	do{
 		current_token = lexer_next_token(lexer);
-		vector_append(tokens_vector, &current_token, 1)
+		vector_append(tokens_vector, &current_token, 1);
 		if(current_token->type == TOKEN_ERROR){
 			return vector_value(tokens_vector);	
 		}
-	}
-
+	}while(current_token->type != TOKEN_EOF);
+	return (token_T**)vector_value(tokens_vector);
 }

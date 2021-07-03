@@ -1,11 +1,6 @@
 #ifndef TPYTHON_TOKEN_H
 #define TPYTHON_TOKEN_H
-
-# if __WORDSIZE == 64
-#  define SIZE_MAX              (18446744073709551615UL)
-# else
-#  define SIZE_MAX              (4294967295U)
-# endif
+#include <stdint.h>
 
 typedef struct TOKEN_STRUCT{
 	char* value;

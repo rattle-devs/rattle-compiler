@@ -83,7 +83,7 @@ token_T* lexer_parse_comment(lexer_T* lexer){
 }
 
 token_T* lexer_parse_alphanumeric(lexer_T* lexer){ //TODO implenet actual function
-	Vector text = vector_init(2, sizeof(char));
+	Vector* text = vector_init(2, sizeof(char));
 
 	return init_token(vector_value(text), TOKEN_IDENTIFIER); 
 }
@@ -103,7 +103,9 @@ token_T* lexer_parse_token(lexer_T* lexer){
 		lexer->new_line = true;
 		return lexer_parse_comment(lexer);
 	}
-	if(isalnum(lexer->c))
+	if(isalnum(lexer->c)){
+
+	}
 
 	return init_token(NULL, TOKEN_IDENTIFIER);
 }
