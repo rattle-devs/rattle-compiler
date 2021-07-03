@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <stdio.h>
 #include "include/tpython.h"
 #include "include/lexer.h"
 #include "include/token.h"
@@ -19,6 +20,7 @@ token_T** tpython_run_lexer(char* src){
 		if(current_token->type == TOKEN_ERROR){
 			return vector_value(tokens_vector);	
 		}
+		printf("(\"%s\", %zu)\n", current_token->value, current_token->type);
 	}while(current_token->type != TOKEN_EOF);
 	return (token_T**)vector_value(tokens_vector);
 }

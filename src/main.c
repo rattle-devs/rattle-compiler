@@ -5,7 +5,7 @@
 #include "include/tpython.h"
 
 int main() {
-	Vector* v = vector_init(0, sizeof(char));
+	/*Vector* v = vector_init(0, sizeof(char));
 	for (char i = 33; i < 127; i++)
 		vector_append(v, &i, 1);
 
@@ -18,13 +18,10 @@ int main() {
 	
 	printf("%zu\n", sizeof(int));
 	printf("%zu\n", sizeof(char));
+	*/
 
-
-	char* code = "func main() int\n    return 0";
-	printf("CODE:\n%s\n----------------------", code);
-
+	char* code = "func main() int\n    return 0\0";
+	printf("CODE:\n%s\n----------------------\n", code);
 	tpython_compile(code);
-
-	printf("Hello World!\n");
 	return 0;
 }

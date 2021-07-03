@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <stdio.h>
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
@@ -15,6 +16,7 @@ lexer_T* lexer_init(char* src, bool use_tab){
 	lexer->c = lexer->src[lexer->i];
 	lexer->current_indent = 0;
 	lexer->line_indent = 0;
+	lexer->new_line = true;
 	return lexer;
 }
 
@@ -102,7 +104,10 @@ token_T* lexer_parse_comment(lexer_T* lexer){
 
 token_T* lexer_parse_alphanumeric(lexer_T* lexer){ //TODO: implement an actual function
 	Vector* text = vector_init(2, sizeof(char));
-
+	while (isalnum(lexer->c)) {
+		vector_append(text, &lexer->c, 1);
+		lexer_advance(lexer);
+	}
 	return init_token(vector_value(text), TOKEN_IDENTIFIER); 
 }
 
@@ -123,17 +128,24 @@ token_T* lexer_parse_token(lexer_T* lexer){
 		return lexer_parse_comment(lexer);
 	}
 	if(isalnum(lexer->c)){
-
+		return lexer_parse_alphanumeric(lexer);	
 	}
-
-	return init_token(NULL, TOKEN_IDENTIFIER);
+	if(lexer->c == '\n'){
+		char* nl = "\n";
+		return lexer_advance_with(lexer, init_token(nl, TOKEN_SEPARATOR));
+	}
+	if(lexer->c == '(' || lexer->c == ')' || lexer->c == '[' || lexer->c == ']'){
+		char* ch = calloc(1, sizeof(char));
+		memcpy(ch, &lexer->c,sizeof(char));
+		return lexer_advance_with(lexer, init_token(ch, TOKEN_SEPARATOR));
+	}
+	char* err = "?";
+	return lexer_advance_with(lexer, init_token(err, lexer->c));
 }
 
 token_T* lexer_next_token(lexer_T* lexer){
 	while(lexer->c != '\0'){
-		if(!isspace(lexer->c)){
-			return lexer_parse_token(lexer);
-		}
+		return lexer_parse_token(lexer);
 	}
 	return init_token(0, TOKEN_EOF);
 }
