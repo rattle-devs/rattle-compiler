@@ -8,7 +8,7 @@ bool is_literal(char* text){
     /*
     char * reserved_literals[] = { RESERVED_LITERALS };
     for (int i = 0; i < ARRAY_LENGTH(reserved_literals); i++){
-        if (*text == *reserved_literals[i]){
+        if (!strcmp(text == reserved_literals[i])){
             return true;
         }
     }
