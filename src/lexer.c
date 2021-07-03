@@ -38,14 +38,17 @@ void lexer_skip_whitespace(lexer_T* lexer){
 //returns '\r' when indentation level falls back, '\t' when it advances, NULL when is stays the same, otherwise error
 token_T* lexer_parse_indent(lexer_T* lexer){
 	if(lexer->current_indent == 0){
-
 		if(lexer->use_tab){ //source code uses tabs
 			while (lexer->c == '\t') {
 				lexer->line_indent++;
 				lexer_advance(lexer);
+				if(lexer->c == '#'){
+					lexer->current_indent = 0;
+					lexer->new_line = false;
+					return NULL;
+				}
 			}
 		}if(!lexer->use_tab){ //source code doesn't use tabs for indentation
-
             char counter = 0;
 			while (lexer->c == ' ') {
 				counter++;
@@ -53,6 +56,11 @@ token_T* lexer_parse_indent(lexer_T* lexer){
 				if(counter == 4){
 					counter = 0;
 				lexer->line_indent++;
+				}
+				if(lexer->c == '#'){
+					lexer->line_indent = 0;
+					lexer->new_line = false;
+					return NULL;
 				}
 				if(lexer->c != ' ' && counter != 0){
 					char* error = "Indentation not divisible by 4";
@@ -68,7 +76,7 @@ token_T* lexer_parse_indent(lexer_T* lexer){
 		return init_token(cr, TOKEN_SEPARATOR);
 	}
     //indent level one higher - indicated as separator '\t'
-	if(lexer->line_indent - 1 == lexer->current_indent){
+	while(lexer->line_indent > lexer->current_indent){
 		lexer->current_indent++;
 		char* ht = "\t";
 		return init_token(ht, TOKEN_SEPARATOR);
