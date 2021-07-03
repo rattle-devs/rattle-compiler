@@ -14,6 +14,6 @@ set(CMAKE_C_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -std=c17 -Wall -Wall -Werror -Wshado
 include_directories(${PROJECT_SOURCE_DIR})
 
 # add the executable
-add_executable(Main src/lib/vector.c src/token.c src/lexer.c src/tpython.c
+add_executable(Main src/lib/vector.c src/lib/utils.c src/token.c src/lexer.c src/tpython.c
 	src/main.c)
 

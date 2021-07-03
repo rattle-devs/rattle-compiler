@@ -3,6 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
+#include <src/lib/include/utils.h>
 #include "include/lexer.h"
 #include "include/token.h"
 #include "lib/include/vector.h"
@@ -105,14 +106,14 @@ token_T* lexer_parse_comment(lexer_T* lexer){
 token_T* lexer_parse_alphanumeric(lexer_T* lexer){ //TODO: implement an actual function
 	Vector* text = vector_init(2, sizeof(char));
 	size_t token_type = TOKEN_IDENTIFIER;
-	if (isdigit(lexer->c) || lexer->c == '.' || lexer->c == '\"') {
-        token_type = TOKEN_LITERAL;
-    }
-	while (!isspace(lexer->c)) {
+	while (isalnum(lexer->c) || lexer->c == '.' || lexer->c == '_' || lexer->c == '%') {
 		vector_append(text, &lexer->c, 1);
 		lexer_advance(lexer);
 	}
 	char* vec_val = (char*) vector_value(text);
+	if (is_literal(vec_val)){
+	    token_type = TOKEN_LITERAL;
+	}
 	return token_init(vec_val, token_type);
 }
 
@@ -145,7 +146,7 @@ token_T* lexer_parse_token(lexer_T* lexer){
 		return lexer_advance_with(lexer, token_init(ch, TOKEN_SEPARATOR));
 	}
 	char* err = "?";
-	return lexer_advance_with(lexer, token_init(err, lexer->c));
+	return lexer_advance_with(lexer, token_init(err, (size_t)lexer->c));
 }
 
 token_T* lexer_next_token(lexer_T* lexer){
