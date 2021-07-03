@@ -49,11 +49,11 @@ void* vector_data(Vector* v){
 	return v->data;
 }
 
-char* vector_value(Vector *v){
+void* vector_value(Vector *v){
 	vector_realloc(v, vector_size(v) + 1);
 	const int i = 0;
 	vector_append(v, &i, 1);
-	char* data = v->data;
+	void* data = v->data;
 	free(v);
 	return data;
 }

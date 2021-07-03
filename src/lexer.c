@@ -6,10 +6,11 @@
 #include "include/token.h"
 #include "lib/include/vector.h"
 
-lexer_T* init_lexer(char* src){
+lexer_T* lexer_init(char* src, bool use_tab){
 	lexer_T* lexer = calloc(1, sizeof(struct LEXER_STRUCT));
 	lexer->src = src;
 	lexer->src_size = strlen(src);
+	lexer->use_tab = use_tab;
 	lexer->i = 0;
 	lexer->c = lexer->src[lexer->i];
 	return lexer;
@@ -32,6 +33,46 @@ void lexer_skip_whitespace(lexer_T* lexer){
 		lexer_advance(lexer);
 }
 
+token_T* lexer_parse_indent(lexer_T* lexer){
+	size_t line_indent = 0;
+	if(lexer->use_tab){
+		while (lexer->c == '\t') {
+			line_indent++;
+			lexer_advance(lexer);
+		}
+	}if(!lexer->use_tab){
+		char counter = 0;
+		while (lexer->c == ' ') {
+			counter++;
+			lexer_advance(lexer);
+			if(counter == 4){
+				counter = 0;
+				line_indent++;
+			}
+			if(lexer->c != ' ' && counter != 0){
+				char* error = "Indentation not divisible by 4";
+				return init_token(error, TOKEN_ERROR);
+			}
+		}
+	}
+
+	if(line_indent + 1 == lexer->current_indent){
+		lexer->current_indent = line_indent;
+		char* cr = "\r";
+		return init_token(cr, TOKEN_SEPARATOR);
+	}
+	if(line_indent == lexer->current_indent){
+		return NULL;
+	}
+	if(line_indent - 1 == lexer->current_indent){
+		lexer->current_indent = line_indent;
+		char* ht = "\t";
+		return init_token(ht, TOKEN_SEPARATOR);
+	}
+	char* error = "Unknown indentation error";
+	return init_token(error, TOKEN_ERROR);
+}
+
 token_T* lexer_parse_comment(lexer_T* lexer){
 	Vector* comment = vector_init(2, sizeof(char));
 	while (lexer->c != '\n') {
@@ -47,11 +88,13 @@ token_T* lexer_parse_alphanumeric(lexer_T* lexer){ //TODO implenet actual functi
 	return init_token(vector_value(text), TOKEN_IDENTIFIER); 
 }
 
-
 token_T* lexer_parse_token(lexer_T* lexer){
-	
 	if(lexer->new_line){
-		//TODO: lexer_parse_indent(lexer); 
+		lexer->new_line = false;
+		token_T* result = lexer_parse_indent(lexer);
+		if(result != NULL){
+			return result;
+		}
 	}
 	if(isspace(lexer->c)){
 		lexer_skip_whitespace(lexer);

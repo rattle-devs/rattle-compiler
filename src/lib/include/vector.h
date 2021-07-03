@@ -18,7 +18,7 @@ void vector_free(Vector* v);
 
 void* vector_data(Vector* v);
 
-char* vector_value(Vector* v);
+void* vector_value(Vector* v);
 
 size_t vector_size(const Vector* v);
 
