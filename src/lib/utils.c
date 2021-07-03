@@ -1,12 +1,13 @@
 #include <stdbool.h>
 #include <ctype.h>
+#include <stdio.h>
 #include "include/utils.h"
 
 bool is_literal(char* text){
     /*
     char * reserved_literals[] = { RESERVED_LITERALS };
     for (int i = 0; i < ARRAY_LENGTH(reserved_literals); i++){
-        if (text == reserved_literals[i]){
+        if (*text == *reserved_literals[i]){
             return true;
         }
     }
@@ -19,8 +20,8 @@ bool is_literal(char* text){
 
 bool is_keyword(char* text){
     char * reserved_keywords[] = { RESERVED_KEYWORDS };
-    for (int i = 0; i < ARRAY_LENGTH(reserved_keywords); i++){
-        if (text == reserved_keywords[i]){
+	for (int i = 0; i < ARRAY_LENGTH(reserved_keywords); i++){
+		if (*text == *reserved_keywords[i]){
             return true;
         }
     }
