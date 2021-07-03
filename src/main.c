@@ -20,7 +20,7 @@ int main() {
 	printf("%zu\n", sizeof(char));
 	*/
 
-	char* code = "func main() int\n    return 0\0";
+	char* code = "func main() int\n\treturn 0 #a not so friendly comment\n\t#a friendly comment\0";
 	printf("CODE:\n%s\n----------------------\n", code);
 	tpython_compile(code);
 	return 0;

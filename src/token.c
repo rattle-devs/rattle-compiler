@@ -12,6 +12,7 @@ token_T* token_init(char * value, size_t type){
 }
 
 void token_print(token_T* token){
+    char * token_types[] = { TOKEN_TYPES };
     char * unescaped[] = {
             "\n",
             "\t",
@@ -31,5 +32,5 @@ void token_print(token_T* token){
             break;
         }
     }
-    printf("(\"%s\", %zu)\n", tempDebugValue, token->type);
+    printf("\t(\"%s\", %s)\n", tempDebugValue, token_types[token->type]);
 }

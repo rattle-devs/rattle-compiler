@@ -1,3 +1,4 @@
+#define __USE_MINGW_ANSI_STDIO 1
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
@@ -40,6 +41,7 @@ void lexer_skip_whitespace(lexer_T* lexer){
 
 //returns '\r' when indentation level falls back, '\t' when it advances, NULL when is stays the same, otherwise error
 token_T* lexer_parse_indent(lexer_T* lexer){
+    //printf("Indent: %zu\n", lexer->current_indent);
 	if(lexer->current_indent == 0){
 		if(lexer->use_tab){ //source code uses tabs
 			while (lexer->c == '\t') {
@@ -137,6 +139,7 @@ token_T* lexer_parse_token(lexer_T* lexer){
 		return lexer_parse_alphanumeric(lexer);	
 	}
 	if(lexer->c == '\n'){
+	    lexer->new_line = true;
 		char* nl = "\n";
 		return lexer_advance_with(lexer, token_init(nl, TOKEN_SEPARATOR));
 	}

@@ -17,7 +17,8 @@ bool is_literal(char* text){
     return false;
 }
 
-bool is_keyword(char* text){char * reserved_keywords[] = { RESERVED_KEYWORDS };
+bool is_keyword(char* text){
+    char * reserved_keywords[] = { RESERVED_KEYWORDS };
     for (int i = 0; i < ARRAY_LENGTH(reserved_keywords); i++){
         if (text == reserved_keywords[i]){
             return true;

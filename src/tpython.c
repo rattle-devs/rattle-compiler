@@ -13,7 +13,7 @@ void tpython_compile(char* file_path){ // finally file patch currently string
 
 token_T** tpython_run_lexer(char* src){
 	Vector* tokens_vector = vector_init(8, sizeof(token_T*));
-	lexer_T* lexer = lexer_init(src, false);
+	lexer_T* lexer = lexer_init(src, true);
 	token_T* current_token = NULL;
 	do{
 		current_token = lexer_next_token(lexer);
