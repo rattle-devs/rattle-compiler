@@ -4,7 +4,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
-#include <src/lib/include/utils.h>
+#include "lib/include/utils.h"
 #include "include/lexer.h"
 #include "include/token.h"
 #include "lib/include/vector.h"
@@ -41,14 +41,13 @@ void lexer_skip_whitespace(lexer_T* lexer){
 
 //returns '\r' when indentation level falls back, '\t' when it advances, NULL when is stays the same, otherwise error
 token_T* lexer_parse_indent(lexer_T* lexer){
-    //printf("Indent: %zu\n", lexer->current_indent);
-	if(lexer->current_indent == 0){
+	if(lexer->line_indent == 0){
 		if(lexer->use_tab){ //source code uses tabs
 			while (lexer->c == '\t') {
 				lexer->line_indent++;
 				lexer_advance(lexer);
 				if(lexer->c == '#'){
-					lexer->current_indent = 0;
+					lexer->line_indent = 0;
 					lexer->new_line = false;
 					return NULL;
 				}
@@ -98,7 +97,7 @@ token_T* lexer_parse_indent(lexer_T* lexer){
 //TODO: comments not matching indentation level should not fuck up the whole lexer
 token_T* lexer_parse_comment(lexer_T* lexer){
 	Vector* comment = vector_init(2, sizeof(char));
-	while (lexer->c != '\n') {
+	while (lexer->c != '\n' && lexer->c != '\0') {
 		vector_append(comment, &lexer->c, 1);
 		lexer_advance(lexer);
 	}
@@ -132,14 +131,13 @@ token_T* lexer_parse_token(lexer_T* lexer){
 		lexer_skip_whitespace(lexer);
 	}
 	if(lexer->c == '#'){
-		lexer->new_line = true;
 		return lexer_parse_comment(lexer);
 	}
 	if(isalnum(lexer->c)){
 		return lexer_parse_alphanumeric(lexer);	
 	}
 	if(lexer->c == '\n'){
-	    lexer->new_line = true;
+		lexer->new_line = true;
 		char* nl = "\n";
 		return lexer_advance_with(lexer, token_init(nl, TOKEN_SEPARATOR));
 	}
