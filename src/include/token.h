@@ -1,6 +1,7 @@
 #ifndef TPYTHON_TOKEN_H
 #define TPYTHON_TOKEN_H
 #define TOKEN_TYPES "encoding", "identifier", "keyword", "separator", "operator", "literal", "comment", "EOF", "ERROR"
+#include <sys/types.h>
 #include <stdint.h>
 
 typedef struct TOKEN_STRUCT{

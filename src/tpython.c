@@ -1,3 +1,5 @@
+#define _GNU_SOURCE
+#include <sys/types.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -6,8 +8,21 @@
 #include "include/token.h"
 #include "lib/include/vector.h"
 
-void tpython_compile(char* file_path){ // finally file patch currently string
-	/*token_T** tokens =*/ tpython_run_lexer(file_path);
+bool tpython_compile(char* file_name){ // finally file patch currently string
+  char* src = NULL;
+  size_t lenght;
+  FILE* fp = fopen (file_name, "rb");
+  if(fp == NULL){
+    printf("rattle: fatal error: %s: No such file or directory\n", file_name);
+    return EXIT_FAILURE;
+  }
+  ssize_t bytes_read = getdelim( &src, &lenght, '\0', fp);
+  if(bytes_read != -1){
+    /*token_T** tokens =*/ tpython_run_lexer(src);
+    return EXIT_SUCCESS;
+  }
+  printf("rattle: fatal error: %s: Error reading file\n", file_name);
+  return EXIT_FAILURE;
 	
 }
 
