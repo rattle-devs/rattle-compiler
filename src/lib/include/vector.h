@@ -20,10 +20,10 @@ void vector_free(Vector* v);
 // Returns the item at index position in the vector.
 void* vector_at(Vector* v, size_t index);
 
-// Returns the first item in the vector.
+// Returns the first item in the vector. (arr[0])
 void* vector_front(Vector* v);
 
-// Returns the last item in the vector.
+// Returns the last item in the vector. (arr[n])
 void* vector_back(Vector* v);
 
 // Returns a pointer to the data stored in the vector. The pointer can be used to access and modify the items in the vector.

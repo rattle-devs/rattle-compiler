@@ -149,8 +149,8 @@ token_T* lexer_parse_token(lexer_T* lexer){
 		memcpy(ch, &lexer->c,sizeof(char));
 		return lexer_advance_with(lexer, token_init(ch, TOKEN_SEPARATOR));
 	}
-	char* err = "?";
-	return lexer_advance_with(lexer, token_init(err, (size_t)lexer->c));
+	char* err = &lexer->c;
+	return lexer_advance_with(lexer, token_init(err, TOKEN_ERROR));
 }
 
 token_T* lexer_next_token(lexer_T* lexer){
