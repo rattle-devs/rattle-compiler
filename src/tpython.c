@@ -1,4 +1,3 @@
-#define _GNU_SOURCE
 #include <sys/types.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -9,16 +8,18 @@
 #include "lib/include/vector.h"
 
 bool tpython_compile(char* file_name){ // finally file patch currently string
-  char* src = NULL;
-  size_t lenght;
+  Vector* src = vector_init(64, sizeof(char));
   FILE* fp = fopen (file_name, "rb");
   if(fp == NULL){
     printf("rattle: fatal error: %s: No such file or directory\n", file_name);
     return EXIT_FAILURE;
   }
-  ssize_t bytes_read = getdelim( &src, &lenght, '\0', fp);
-  if(bytes_read != -1){
-    Vector* tokens = tpython_run_lexer(src);
+  char ch;
+  while((ch = (char)fgetc(fp)) != EOF)
+      vector_append(src, &ch, 1);
+
+  if(vector_count(src) > 0){
+    Vector* tokens = tpython_run_lexer(vector_value(src));
     token_T* last = vector_back(tokens);
 	if(last->type == TOKEN_EOF){
 		return EXIT_SUCCESS;

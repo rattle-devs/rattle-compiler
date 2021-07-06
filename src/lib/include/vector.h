@@ -32,6 +32,8 @@ void* vector_data(Vector* v);
 // Returns a pointer to the data stored in the vector. The vector is destryed
 void* vector_value(Vector* v);
 
+size_t vector_count(const Vector* v);
+
 size_t vector_size(const Vector* v);
 
 size_t vector_max_count(const Vector* v);

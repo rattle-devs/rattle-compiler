@@ -76,8 +76,12 @@ void* vector_value(Vector *v){
 
 // ----------------------------------------------------------------------------
 
+size_t vector_count(const Vector* v){
+	return v->count;
+}
+
 size_t vector_size(const Vector* v) {
-  return v->count * v->element_size;
+	return v->count * v->element_size;
 }
 
 size_t vector_max_count(const Vector* v){
