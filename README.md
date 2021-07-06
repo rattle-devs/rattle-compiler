@@ -41,4 +41,4 @@ The content of the commit message body should contain:
 </ul>
 
 ## License
-CC-BY-SA-4.0 
+GPL-3.0-or-later License
