@@ -22,4 +22,5 @@
 #define ARRAY_LENGTH(array) (sizeof((array))/sizeof((array)[0]))
 bool is_literal(char* text);
 bool is_keyword(char* text);
+bool is_alphanumeric(char ch);
 #endif //UTILS_H

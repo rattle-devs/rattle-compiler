@@ -99,7 +99,7 @@ token_T* lexer_parse_comment(lexer_T* lexer){
 token_T* lexer_parse_alphanumeric(lexer_T* lexer){ //TODO: implement an actual function
 	Vector* text = vector_init(2, sizeof(char));
 	size_t token_type = TOKEN_IDENTIFIER;
-	while (isalnum(lexer->c) || lexer->c == '_') {
+	while (is_alphanumeric(lexer->c)) {
 		vector_append(text, &lexer->c, 1);
 		lexer_advance(lexer);
 	}
@@ -132,7 +132,7 @@ token_T* lexer_parse_token(lexer_T* lexer){
 	if(lexer->c == '#'){
 		return lexer_parse_comment(lexer);
 	}
-	if(isalnum(lexer->c)){
+	if(is_alphanumeric(lexer->c)){
 		return lexer_parse_alphanumeric(lexer);	
 	}
 	if(lexer->c == '\n'){

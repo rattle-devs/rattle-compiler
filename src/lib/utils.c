@@ -28,3 +28,7 @@ bool is_keyword(char* text){
     }
     return false;
 }
+
+bool is_alphanumeric(char ch){
+	return isalnum(ch) || ch == '"' || ch == '\'' || ch == '`' || ch == '_';	
+}
