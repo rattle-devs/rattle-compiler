@@ -137,10 +137,8 @@ token_T* lexer_parse_token(lexer_T* lexer){
 	}
 	if(lexer->c == '\n'){
 		lexer->new_line = true;
-		//char* nl = "\n";
-		//return lexer_advance_with(lexer, token_init(nl, TOKEN_SEPARATOR));
-        lexer_advance(lexer);
-		return lexer_parse_token(lexer);
+		char* nl = "\n";
+		return lexer_advance_with(lexer, token_init(nl, TOKEN_SEPARATOR));
 	}
 	if(lexer->c == '(' || lexer->c == ')' || lexer->c == '[' || lexer->c == ']'){
 		char* ch = calloc(1, sizeof(char));
@@ -152,12 +150,8 @@ token_T* lexer_parse_token(lexer_T* lexer){
 }
 
 token_T* lexer_next_token(lexer_T* lexer){
-	if (lexer->c != '\0'){
+	while(lexer->c != '\0'){
 		return lexer_parse_token(lexer);
-	}
-	if (lexer->current_indent > 0) {
-	    lexer->current_indent--;
-        return token_init("\r", TOKEN_SEPARATOR);
 	}
 	return token_init("\0", TOKEN_EOF);
 }
