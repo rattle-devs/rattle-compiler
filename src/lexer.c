@@ -99,6 +99,24 @@ token_T* lexer_parse_comment(lexer_T* lexer){
 token_T* lexer_parse_alphanumeric(lexer_T* lexer){ //TODO: implement an actual function
 	Vector* text = vector_init(2, sizeof(char));
 	size_t token_type = TOKEN_IDENTIFIER;
+	if(lexer->c == '\'' || lexer->c == '"' || lexer->c == '`'){
+		char quote = lexer->c;
+		vector_append(text, &quote, 1);
+		do {
+			lexer_advance(lexer);
+			if(lexer->c == '\\'){
+				lexer_advance(lexer);
+				vector_append(text, &lexer->c, 1);
+				lexer_advance(lexer);
+				vector_append(text, &lexer->c, 1);
+			}else
+				vector_append(text, &lexer->c, 1);
+		} while (lexer->c != quote);
+		lexer_advance(lexer);
+		if(isspace(lexer->c)){
+			return token_init((char *)vector_value(text), TOKEN_LITERAL);
+		}
+	}
 	while (is_alphanumeric(lexer->c)) {
 		vector_append(text, &lexer->c, 1);
 		lexer_advance(lexer);

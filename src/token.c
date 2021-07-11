@@ -32,5 +32,5 @@ void token_print(token_T* token){
             break;
         }
     }
-    printf("\t(\"%s\", %s)\n", tempDebugValue, token_types[token->type]);
+    printf("\t(%s, %s)\n", tempDebugValue, token_types[token->type]);
 }
