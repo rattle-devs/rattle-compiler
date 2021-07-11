@@ -14,7 +14,7 @@ When making commits, follow the commit guide:
   │       │          │
   │       │          └─⫸ Brief summary of the commit, without a period at its end
   │       │
-  │       └─⫸ Commit Scope: lexer|parser|compiler|utils|general
+  │       └─⫸ Commit Scope: lexer|parser|compiler|utils|general|github
   │                         
   └─⫸ Commit Type: docs|feat|fix|perf|refactor|test
 ```

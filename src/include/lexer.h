@@ -10,13 +10,12 @@ typedef struct LEXER_STRUCT{
 	size_t i; // current place
 	size_t current_indent;
 	size_t line_indent;
-	bool use_tab;
 	char c;
 	bool new_line;
-	char _pad[5];
+	char _pad[6];
 } lexer_T;
 
-lexer_T* lexer_init(char* src, bool use_tab);
+lexer_T* lexer_init(char* src);
 
 void lexer_advance(lexer_T* lexer);
 
