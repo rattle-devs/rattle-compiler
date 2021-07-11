@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "include/token.h"
-
+#include "include/lexer.h"
 token_T* token_init(char * value, size_t type){
 	token_T* token = calloc(1, sizeof(struct TOKEN_STRUCT));
 	token->value = value;
@@ -11,7 +11,7 @@ token_T* token_init(char * value, size_t type){
 	return token;
 }
 
-void token_print(token_T* token){
+void token_print(token_T* token, size_t indent){
     char * token_types[] = { TOKEN_TYPES };
     char * unescaped[] = {
             "\n",
@@ -32,5 +32,11 @@ void token_print(token_T* token){
             break;
         }
     }
-    printf("\t(\"%s\", %s)\n", tempDebugValue, token_types[token->type]);
+    for (size_t i = 0; i < indent; i++){
+        printf("\t");
+    }
+    printf("\t%-16s\t%s\n", token_types[token->type], tempDebugValue);
+    if (token->value[0] == '\n'){
+        printf("\n");
+    }
 }

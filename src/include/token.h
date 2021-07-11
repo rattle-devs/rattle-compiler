@@ -16,11 +16,12 @@ typedef struct TOKEN_STRUCT{
 		TOKEN_COMMENT,
 		TOKEN_EOF,
 		TOKEN_ERROR,
+		TOKEN_UNKNOWN,
 		TOKEN_ALIGN_TO_SIZE_T = SIZE_MAX
 	} type;
 } token_T;
 
 token_T* token_init(char * value, size_t type);
 
-void token_print(token_T* token);
+void token_print(token_T* token, size_t indent);
 #endif //TPYTHON_TOKEN_H

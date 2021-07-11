@@ -19,4 +19,6 @@ add_executable(rattle src/lib/vector.c src/lib/utils.c src/token.c src/lexer.c s
 IF(CMAKE_BUILD_TYPE MATCHES DEBUG)
 	enable_testing()
 	add_test(NAME Concept COMMAND rattle ${PROJECT_SOURCE_DIR}/examples/concept.rattle)
+	add_test(NAME Hello_world COMMAND rattle ${PROJECT_SOURCE_DIR}/examples/hello_world.rattle)
+	add_test(NAME Fib COMMAND rattle ${PROJECT_SOURCE_DIR}/examples/fib.rattle)
 ENDIF(CMAKE_BUILD_TYPE MATCHES DEBUG)

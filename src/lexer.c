@@ -99,7 +99,25 @@ token_T* lexer_parse_comment(lexer_T* lexer){
 token_T* lexer_parse_alphanumeric(lexer_T* lexer){ //TODO: implement an actual function
 	Vector* text = vector_init(2, sizeof(char));
 	size_t token_type = TOKEN_IDENTIFIER;
-	while (isalnum(lexer->c) || lexer->c == '.' || lexer->c == '_' || lexer->c == '%') {
+	if(lexer->c == '\'' || lexer->c == '"' || lexer->c == '`'){
+		char quote = lexer->c;
+		vector_append(text, &quote, 1);
+		do {
+			lexer_advance(lexer);
+			if(lexer->c == '\\'){
+				lexer_advance(lexer);
+				vector_append(text, &lexer->c, 1);
+				lexer_advance(lexer);
+				vector_append(text, &lexer->c, 1);
+			}else
+				vector_append(text, &lexer->c, 1);
+		} while (lexer->c != quote);
+		lexer_advance(lexer);
+		if(isspace(lexer->c)){
+			return token_init((char *)vector_value(text), TOKEN_LITERAL);
+		}
+	}
+	while (is_alphanumeric(lexer->c)) {
 		vector_append(text, &lexer->c, 1);
 		lexer_advance(lexer);
 	}
@@ -113,6 +131,33 @@ token_T* lexer_parse_alphanumeric(lexer_T* lexer){ //TODO: implement an actual f
 	return token_init(vec_val, token_type);
 }
 
+token_T* lexer_parse_operator_separator(lexer_T* lexer){
+    Vector* text = vector_init(2, sizeof(char));
+    size_t token_type = TOKEN_UNKNOWN;
+    char *vec_val = NULL;
+    if (is_separator(lexer->c)){
+        if (lexer->c == '\n'){
+            lexer->new_line = true;
+        }
+        token_type = TOKEN_SEPARATOR;
+		vec_val = calloc(1, sizeof(char));
+        memcpy(vec_val, &lexer->c, sizeof(char));
+        return lexer_advance_with(lexer, token_init(vec_val, token_type));
+    }
+    while (!isalnum(lexer->c) && !isspace(lexer->c)) {
+        //printf("Char: %c\n", lexer->c);
+        vector_append(text, &lexer->c, 1);
+        lexer_advance(lexer);
+    }
+    vec_val = (char*) vector_value(text);
+    if (is_operator(vec_val)){
+        token_type = TOKEN_OPERATOR;
+    }
+    else {
+        return NULL;
+    }
+    return token_init(vec_val, token_type);
+}
 //main function for token parsing
 token_T* lexer_parse_token(lexer_T* lexer){
     //NOTE: line zero is a newline
@@ -132,26 +177,24 @@ token_T* lexer_parse_token(lexer_T* lexer){
 	if(lexer->c == '#'){
 		return lexer_parse_comment(lexer);
 	}
-	if(isalnum(lexer->c)){
+	if(is_alphanumeric(lexer->c)){
 		return lexer_parse_alphanumeric(lexer);	
 	}
-	if(lexer->c == '\n'){
-		lexer->new_line = true;
-		char* nl = "\n";
-		return lexer_advance_with(lexer, token_init(nl, TOKEN_SEPARATOR));
-	}
-	if(lexer->c == '(' || lexer->c == ')' || lexer->c == '[' || lexer->c == ']'){
-		char* ch = calloc(1, sizeof(char));
-		memcpy(ch, &lexer->c,sizeof(char));
-		return lexer_advance_with(lexer, token_init(ch, TOKEN_SEPARATOR));
+	token_T* res = lexer_parse_operator_separator(lexer);
+	if (res != NULL){
+        return res;
 	}
 	char* err = &lexer->c;
-	return lexer_advance_with(lexer, token_init(err, TOKEN_ERROR));
+    return lexer_advance_with(lexer, token_init(err, TOKEN_ERROR));
 }
 
 token_T* lexer_next_token(lexer_T* lexer){
-	while(lexer->c != '\0'){
+	if (lexer->c != '\0'){
 		return lexer_parse_token(lexer);
 	}
+    if (lexer->current_indent > 0){
+        lexer->current_indent--;
+        return token_init("\r", TOKEN_SEPARATOR);
+    }
 	return token_init("\0", TOKEN_EOF);
 }
