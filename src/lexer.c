@@ -99,7 +99,7 @@ token_T* lexer_parse_comment(lexer_T* lexer){
 token_T* lexer_parse_alphanumeric(lexer_T* lexer){ //TODO: implement an actual function
 	Vector* text = vector_init(2, sizeof(char));
 	size_t token_type = TOKEN_IDENTIFIER;
-	while (isalnum(lexer->c) || lexer->c == '.' || lexer->c == '_' || lexer->c == '%') {
+	while (isalnum(lexer->c) || lexer->c == '_') {
 		vector_append(text, &lexer->c, 1);
 		lexer_advance(lexer);
 	}
@@ -140,7 +140,7 @@ token_T* lexer_parse_token(lexer_T* lexer){
 		char* nl = "\n";
 		return lexer_advance_with(lexer, token_init(nl, TOKEN_SEPARATOR));
 	}
-	if(lexer->c == '(' || lexer->c == ')' || lexer->c == '[' || lexer->c == ']'){
+	if(lexer->c == '(' || lexer->c == ')' || lexer->c == '[' || lexer->c == ']' || lexer->c == ','){
 		char* ch = calloc(1, sizeof(char));
 		memcpy(ch, &lexer->c,sizeof(char));
 		return lexer_advance_with(lexer, token_init(ch, TOKEN_SEPARATOR));
