@@ -41,7 +41,7 @@ void lexer_skip_whitespace(lexer_T* lexer){
 //returns '\r' when indentation level falls back, '\t' when it advances, NULL when is stays the same, otherwise error
 token_T* lexer_parse_indent(lexer_T* lexer){
 	if(lexer->line_indent == 0){
-        char counter = 0;
+        size_t counter = 0;
 		while (lexer->c == ' ' || lexer->c == '\t') {
 			if(lexer->c== ' ')
 				counter++;
@@ -64,20 +64,21 @@ token_T* lexer_parse_indent(lexer_T* lexer){
 			}
 		}
 	}
+    //printf("Line indent: %zu, current indent: %zu\n", lexer->line_indent, lexer->current_indent);
+	if (lexer->line_indent < lexer->current_indent){
 
-	while(lexer->line_indent < lexer->current_indent){
 		lexer->current_indent--;
 		char* cr = "\r";
 		return token_init(cr, TOKEN_SEPARATOR);
 	}
     //indent level one higher - indicated as separator '\t'
-	while(lexer->line_indent > lexer->current_indent){
+	if (lexer->line_indent > lexer->current_indent){
 		lexer->current_indent++;
 		char* ht = "\t";
 		return token_init(ht, TOKEN_SEPARATOR);
 	}
     //no indentation change
-	if(lexer->line_indent == lexer->current_indent){
+	if (lexer->line_indent == lexer->current_indent){
 		lexer->new_line = false;
 		lexer->line_indent = 0;
 		return NULL;
@@ -117,7 +118,11 @@ token_T* lexer_parse_token(lexer_T* lexer){
     //NOTE: line zero is a newline
 	if(lexer->new_line){
 		token_T* result = lexer_parse_indent(lexer);
+		if(result == NULL){
+            //printf("%s\n", "KURWA");
+		}
 		if(result != NULL){
+            //printf("Token: %s\n", result->value);
 			return result;
 		}
 	}
