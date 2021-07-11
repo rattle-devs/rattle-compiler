@@ -16,6 +16,7 @@ typedef struct TOKEN_STRUCT{
 		TOKEN_COMMENT,
 		TOKEN_EOF,
 		TOKEN_ERROR,
+		TOKEN_UNKNOWN,
 		TOKEN_ALIGN_TO_SIZE_T = SIZE_MAX
 	} type;
 } token_T;
