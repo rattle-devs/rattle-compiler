@@ -5,5 +5,5 @@ func fib (n int) int
 
 
 n int = 9
-print(f"{fib(n)}")
+print(fib(n))
 

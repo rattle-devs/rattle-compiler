@@ -136,15 +136,18 @@ token_T* lexer_parse_operator_separator(lexer_T* lexer){
     size_t token_type = TOKEN_UNKNOWN;
     char *vec_val = NULL;
     if (is_separator(lexer->c)){
+        if (lexer->c == '\n'){
+            lexer->new_line = true;
+        }
         token_type = TOKEN_SEPARATOR;
-		vec_val = malloc(sizeof(char));
+		vec_val = calloc(1, sizeof(char));
         memcpy(vec_val, &lexer->c, sizeof(char));
         return lexer_advance_with(lexer, token_init(vec_val, token_type));
     }
-    while (!isalnum(lexer->c)) {
+    while (!isalnum(lexer->c) && !isspace(lexer->c)) {
+        //printf("Char: %c\n", lexer->c);
         vector_append(text, &lexer->c, 1);
         lexer_advance(lexer);
-        printf("Char: %c\n", lexer->c);
     }
     vec_val = (char*) vector_value(text);
     if (is_operator(vec_val)){
@@ -186,8 +189,12 @@ token_T* lexer_parse_token(lexer_T* lexer){
 }
 
 token_T* lexer_next_token(lexer_T* lexer){
-	while(lexer->c != '\0'){
+	if (lexer->c != '\0'){
 		return lexer_parse_token(lexer);
 	}
+    if (lexer->current_indent > 0){
+        lexer->current_indent--;
+        return token_init("\r", TOKEN_SEPARATOR);
+    }
 	return token_init("\0", TOKEN_EOF);
 }

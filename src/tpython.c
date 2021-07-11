@@ -39,10 +39,10 @@ Vector* tpython_run_lexer(char* src){
 		current_token = lexer_next_token(lexer);
 		vector_append(tokens_vector, current_token, 1);
 		if(current_token->type == TOKEN_ERROR){
-			token_print(current_token);
+			token_print(current_token, lexer->current_indent);
 			return tokens_vector;
 		}
-        token_print(current_token);
+        token_print(current_token, lexer->current_indent);
 	} while(current_token->type != TOKEN_EOF);
 	return tokens_vector;
 }
