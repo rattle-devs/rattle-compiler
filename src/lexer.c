@@ -134,12 +134,12 @@ token_T* lexer_parse_alphanumeric(lexer_T* lexer){ //TODO: implement an actual f
 token_T* lexer_parse_operator_separator(lexer_T* lexer){
     Vector* text = vector_init(2, sizeof(char));
     size_t token_type = TOKEN_UNKNOWN;
-    printf("Char: %c\n", lexer->c);
     char *vec_val = NULL;
     if (is_separator(lexer->c)){
         token_type = TOKEN_SEPARATOR;
-        strcpy(vec_val, &lexer->c);
-        return token_init(vec_val, token_type);
+		vec_val = malloc(sizeof(char));
+        memcpy(vec_val, &lexer->c, sizeof(char));
+        return lexer_advance_with(lexer, token_init(vec_val, token_type));
     }
     while (!isalnum(lexer->c)) {
         vector_append(text, &lexer->c, 1);
