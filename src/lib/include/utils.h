@@ -1,11 +1,10 @@
 #ifndef UTILS_H
 #define UTILS_H
-#define LITERALS   "true", "false", "null", "undefined"
-#define KEYWORDS   "func", "return", "args", "class", "struct", "if", "else", "for", "while",               \
-                            "switch", "case", "true", "false", "none", "as", "import", "from", "export",    \
-                            "continue", "break", "try", "catch", "panic", "const", "defer", "befriends",    \
-                            "with", "delete", "assert", "elif", "finally", "lambda", "yield", "default",    \
-                            "this", "public", "private", "protected", "implements", "extends", "interface",
+#define LITERALS    "true", "false", "null", "undefined"
+#define KEYWORDS    "async", "await", "break", "const", "continue", "defer", "else", \
+                    "for", "func", "if", "import", "interface", "package", "panic",  \
+                    "return", "struct", "switch", "type", "while",
+
 #define OPERATORS           "+", "-", "*", "/", "%", "**", "//",                        \
                             "+=", "-=", "*=", "/=", "%=", "**=", "//=",                 \
                             "<<", ">>", "<<=", ">>=",                                   \
