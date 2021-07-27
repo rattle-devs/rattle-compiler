@@ -5,7 +5,7 @@
 #include "include/tpython.h"
 #include "include/lexer.h"
 #include "include/token.h"
-#include "lib/include/vector.h"
+#include <vector.h>
 
 bool tpython_compile(char* file_name){ // finally file patch currently string
   Vector* src = vector_init(64, sizeof(char));

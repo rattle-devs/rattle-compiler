@@ -2,7 +2,7 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
-#include "include/utils.h"
+#include "src/lib/utils/utils.h"
 
 bool is_literal(char* text){
     /*

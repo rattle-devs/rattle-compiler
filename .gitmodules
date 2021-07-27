@@ -1,0 +1,5 @@
+[submodule "src/lib/data-types"]
+	path = src/lib/data-types
+	url = https://github.com/rattle-devs/rattle-data-types.git
+	branch = production
+    update = rebase
