@@ -4,10 +4,10 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
-#include "lib/include/utils.h"
+#include <vector.h>
+#include "lib/utils/utils.h"
 #include "include/lexer.h"
 #include "include/token.h"
-#include "lib/include/vector.h"
 
 lexer_T* lexer_init(char* src){
 	lexer_T* lexer = calloc(1, sizeof(struct LEXER_STRUCT));

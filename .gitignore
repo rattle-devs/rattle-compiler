@@ -152,3 +152,4 @@ dkms.conf
 #### Additional
 # Build directory
 *[Bb]uild*/
+/src/lib/data-types/
