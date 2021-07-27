@@ -1,5 +1,5 @@
-export BUILD_TYPE="PRODUCTION"
-cmake -B ./Build -DCMAKE_BUILD_TYPE=$BUILD_TYPE
-cmake --build ./Build --config $BUILD_TYPE
-cd Build/
+export BUILD_TYPE="DEBUG"
+cmake -B ./build -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+cmake --build ./build --config $BUILD_TYPE
+cd build/
 ctest -C $BUILD_TYPE
