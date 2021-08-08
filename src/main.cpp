@@ -1,4 +1,4 @@
-#include "include/rattle.hpp"
+#include "include/Compiler.hpp"
 
 int main(int argc, char **argv) {
 

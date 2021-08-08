@@ -30,6 +30,8 @@ class Token {
         ~Token();
 
         void print(size_t indent);
+
+        [[nodiscard]] Token* clone() const { return new Token(*this); }
 };
 
 #endif //RATTLE_TOKEN_HPP

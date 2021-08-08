@@ -1,7 +1,7 @@
 #ifndef RATTLE_LEXER_HPP
 #define RATTLE_LEXER_HPP
 
-#include "token.hpp"
+#include "Token.hpp"
 #include <cstdio>
 
 class Lexer {

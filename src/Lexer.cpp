@@ -1,6 +1,6 @@
 #include <cstring>
 #include "src/lib/utils/utils.hpp"
-#include "include/lexer.hpp"
+#include "include/Lexer.hpp"
 Lexer::Lexer(string *_src) {
     this->src = _src;
     this->src_size = _src->size();

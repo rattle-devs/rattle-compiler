@@ -13,7 +13,7 @@ include_directories(${PROJECT_SOURCE_DIR})
 include_directories("src/lib/data-types/Vector")
 
 # add the executable
-add_executable(rattle src/lib/utils/utils.cpp src/token.cpp src/lexer.cpp src/rattle.cpp
+add_executable(rattle src/lib/utils/utils.cpp src/Token.cpp src/Lexer.cpp src/Compiler.cpp
 		src/main.cpp)
 
 IF(CMAKE_BUILD_TYPE MATCHES DEBUG)
