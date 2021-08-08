@@ -43,3 +43,7 @@ void Token::print(size_t indent) {
         printf("\n");
     }
 }
+
+Token *Token::deepClone() const {
+    return new Token(new string(*this->value), this->type);
+}

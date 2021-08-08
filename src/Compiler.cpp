@@ -7,7 +7,7 @@ bool Compiler::compile(string *fileName) {
     src = readFileToString(fileName);
     if (src->length() > 0) {
         queue<Token *>* tokens = Compiler::lex(src);
-        Token *last = tokens->back()->clone();
+        Token *last = tokens->back()->deepClone();
         Token *token;
         while (!tokens->empty()){
             token = tokens->front();
