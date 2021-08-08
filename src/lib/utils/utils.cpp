@@ -53,3 +53,17 @@ bool isWordOperator(string *text) {
 bool isAlphanumeric(char ch) {
     return isalnum(ch) || ch == '"' || ch == '\'' || ch == '`' || ch == '_';
 }
+
+string *readFileToString(const string *filename) {
+    FILE *fp = fopen(filename->c_str(), "rb");
+    if (fp) {
+        string contents;
+        fseek(fp, 0, SEEK_END);
+        contents.resize(static_cast<unsigned long>(ftell(fp)));
+        rewind(fp);
+        fread(&contents[0], 1, contents.size(), fp);
+        fclose(fp);
+        return new string(contents);
+    }
+    throw (errno);
+}
