@@ -9,13 +9,25 @@
                             "+=", "-=", "*=", "/=", "%=", "**=", "//=",                 \
                             "<<", ">>", "<<=", ">>=",                                   \
                             "=", "==", "!=", ">", "<", "&", ".", "++", "--", "<=", ">="
-#define SEPARATORS          '\n', '(', ')', '[', ']', ','
+#define SEPARATORS          "\n", "(", ")", "[", "]", ","
 #define WORD_OPERATORS      "and", "or", "in", "xor", "not", "is"
-#define ARRAY_LENGTH(array) (sizeof((array))/sizeof((array)[0]))
-bool is_literal(char* text);
-bool is_keyword(char* text);
-bool is_separator(char text);
-bool is_operator(char* text);
-bool is_word_operator(char* text);
-bool is_alphanumeric(char ch);
+
+#include <string>
+
+using namespace std;
+
+bool isLiteral(string *text);
+
+bool isKeyword(string *text);
+
+bool isSeparator(string *text);
+
+bool isOperator(string *text);
+
+bool isWordOperator(string *text);
+
+bool isAlphanumeric(char ch);
+
+string *readFileToString(const string *filename);
+
 #endif //UTILS_H
