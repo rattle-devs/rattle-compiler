@@ -1,6 +1,6 @@
-#include "include/Lexer.hpp"
-#include "include/Compiler.hpp"
-#include "lib/utils/utils.hpp"
+#include "Lexer.hpp"
+#include "Compiler.hpp"
+#include "utils.hpp"
 
 bool Compiler::compile(string *fileName) {
     string *src = nullptr;

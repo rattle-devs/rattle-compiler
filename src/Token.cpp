@@ -1,5 +1,5 @@
 #include <cstdio>
-#include "include/Token.hpp"
+#include "Token.hpp"
 
 using namespace std;
 

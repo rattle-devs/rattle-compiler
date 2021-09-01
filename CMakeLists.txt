@@ -10,11 +10,13 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -Wall -Wall -Werror -Wshadow -Wdouble-promotion -Wformat -Wformat -Wformat-overflow -Wformat-truncation -Wundef -fno-common -Wconversion -ffunction-sections -Wpadded -g3")
 
 include_directories(${PROJECT_SOURCE_DIR})
-include_directories("src/lib/data-types/Vector")
+
+add_subdirectory(src/lib)
 
 # add the executable
-add_executable(rattle src/lib/utils/utils.cpp src/Token.cpp src/Lexer.cpp src/Compiler.cpp
-		src/main.cpp)
+add_executable(rattle src/Token.cpp src/Lexer.cpp src/Compiler.cpp src/main.cpp)
+
+target_link_libraries(rattle PUBLIC libs)
 
 IF(CMAKE_BUILD_TYPE MATCHES DEBUG)
 	enable_testing()
