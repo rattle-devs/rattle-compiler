@@ -1,5 +1,5 @@
-#ifndef RATTLE_TOKEN_HPP
-#define RATTLE_TOKEN_HPP
+#ifndef RATTLE_COMPILER_TOKEN_HPP
+#define RATTLE_COMPILER_TOKEN_HPP
 #define TOKEN_TYPES "encoding", "identifier", "keyword", "separator", "operator", "literal", "comment", "EOF", "ERROR"
 
 #include <sys/types.h>
@@ -34,4 +34,4 @@ class Token {
         [[nodiscard]] Token* deepClone() const;
 };
 
-#endif //RATTLE_TOKEN_HPP
+#endif //RATTLE_COMPILER_TOKEN_HPP

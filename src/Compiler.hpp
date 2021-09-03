@@ -1,15 +1,16 @@
-#ifndef RATTLE_HPP
-#define RATTLE_HPP
+#ifndef RATTLE_COMPILER_COMPILER_HPP
+#define RATTLE_COMPILER_COMPILER_HPP
 
 #include <queue>
 #include "Token.hpp"
+#include "AST.hpp"
 
 class Compiler {
     public:
         static bool compile(string *fileName);
 
-        static queue<Token *>* lex(string *src);
+        static AST* parse(string *src);
 
 };
 
-#endif // RATTLE_HPP
+#endif // RATTLE_COMPILER_COMPILER_HPP

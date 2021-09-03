@@ -14,7 +14,7 @@ include_directories(${PROJECT_SOURCE_DIR})
 add_subdirectory(src/lib)
 
 # add the executable
-add_executable(rattle src/Token.cpp src/Lexer.cpp src/Compiler.cpp src/main.cpp)
+add_executable(rattle src/Token.cpp src/Lexer.cpp src/Compiler.cpp src/main.cpp src/Parser.cpp src/AST.cpp)
 
 target_link_libraries(rattle PUBLIC libs)
 

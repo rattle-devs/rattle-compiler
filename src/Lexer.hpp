@@ -1,5 +1,5 @@
-#ifndef RATTLE_LEXER_HPP
-#define RATTLE_LEXER_HPP
+#ifndef RATTLE_COMPILER_LEXER_HPP
+#define RATTLE_COMPILER_LEXER_HPP
 
 #include "Token.hpp"
 #include <cstdio>
@@ -46,4 +46,4 @@ class Lexer {
         Token *parseToken();
 };
 
-#endif // RATTLE_LEXER_HPP
+#endif // RATTLE_COMPILER_LEXER_HPP

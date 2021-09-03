@@ -6,10 +6,10 @@ bool Compiler::compile(string *fileName) {
     string *src = nullptr;
     src = readFileToString(fileName);
     if (src->length() > 0) {
-        queue<Token *>* tokens = Compiler::lex(src);
+        queue<Token *> *tokens = Compiler::lex(src);
         Token *last = tokens->back()->deepClone();
         Token *token;
-        while (!tokens->empty()){
+        while (!tokens->empty()) {
             token = tokens->front();
             delete token;
             tokens->pop();
@@ -26,8 +26,8 @@ bool Compiler::compile(string *fileName) {
     return EXIT_FAILURE;
 }
 
-queue<Token *>* Compiler::lex(string *src) {
-    auto* tokens = new queue<Token*>();
+AST *Compiler::parse(string *src) {
+    auto *tokens = new queue<Token *>();
     auto *lexer = new Lexer(src);
     Token *currentToken = nullptr;
     do {
