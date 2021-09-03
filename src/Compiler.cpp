@@ -6,7 +6,7 @@ bool Compiler::compile(string *fileName) {
     string *src = nullptr;
     src = readFileToString(fileName);
     if (src->length() > 0) {
-        queue<Token *> *tokens = Compiler::lex(src);
+        queue<Token *> *tokens = Compiler::parse(src);
         Token *last = tokens->back()->deepClone();
         Token *token;
         while (!tokens->empty()) {
@@ -24,9 +24,10 @@ bool Compiler::compile(string *fileName) {
     }
     printf("rattle: fatal error: %s: Error reading file\n", fileName->c_str());
     return EXIT_FAILURE;
+    return EXIT_SUCCESS;
 }
 
-AST *Compiler::parse(string *src) {
+queue<Token *> *Compiler::parse(string *src) {
     auto *tokens = new queue<Token *>();
     auto *lexer = new Lexer(src);
     Token *currentToken = nullptr;
@@ -35,9 +36,10 @@ AST *Compiler::parse(string *src) {
         tokens->push(currentToken);
         if (currentToken->type == TokenType::TOKEN_ERROR) {
             currentToken->print(lexer->getCurrentIndent());
-            return tokens;
+            //return tokens;
         }
         currentToken->print(lexer->getCurrentIndent());
     } while (currentToken->type != TokenType::TOKEN_EOF);
-    return tokens;
+    //return tokens;
+    return nullptr;
 }

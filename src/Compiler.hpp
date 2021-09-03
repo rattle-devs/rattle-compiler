@@ -9,7 +9,7 @@ class Compiler {
     public:
         static bool compile(string *fileName);
 
-        static AST* parse(string *src);
+        static queue<Token *> *parse(string *src);
 
 };
 
