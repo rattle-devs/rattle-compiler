@@ -36,10 +36,10 @@ queue<Token *> *Compiler::parse(string *src) {
         tokens->push(currentToken);
         if (currentToken->type == TokenType::TOKEN_ERROR) {
             currentToken->print(lexer->getCurrentIndent());
-            //return tokens;
+            return tokens;
         }
         currentToken->print(lexer->getCurrentIndent());
     } while (currentToken->type != TokenType::TOKEN_EOF);
-    //return tokens;
+    return tokens;
     return nullptr;
 }
