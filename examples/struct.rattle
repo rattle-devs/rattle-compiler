@@ -1,0 +1,12 @@
+type Point struct
+	x int
+	y int
+
+type Number int
+
+
+func main () int
+	x Number = 5
+	y int = 7
+	p Point = Point { x: x, y: y}
+

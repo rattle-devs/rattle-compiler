@@ -2,8 +2,14 @@ func fib (n int) int
 	if n <= 1
 		return n
 	return fib(n-1) + fib(n-2)
+	return a, b, c
 
 
-n int = 9
-print(fib(n))
+func loop () null 
+	for x in range()
+		print(x)
+
+func main () int
+	n, a int[5] = 9, [0, 1, 2, 3, 4]
+	print(fib(n))
 

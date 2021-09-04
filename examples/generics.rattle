@@ -1,0 +1,9 @@
+type Tuple<T> struct
+    a T
+    b T
+
+
+func main() int
+	name Tuple<T>[2] = [Tuple<int>{a: "", b:"" }, Tuple<int>{a: "", b:"" }]
+	Print(name[1].a)
+	return 0

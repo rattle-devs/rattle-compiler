@@ -3,13 +3,13 @@
 #define LITERALS    "true", "false", "null", "undefined"
 #define KEYWORDS    "async", "await", "break", "const", "continue", "defer", "else", \
                     "for", "func", "if", "import", "interface", "package", "panic",  \
-                    "return", "struct", "switch", "type", "while",
+                    "return", "struct", "switch", "type", "while", "in"
 
 #define OPERATORS           "+", "-", "*", "/", "%", "**", "//",                        \
                             "+=", "-=", "*=", "/=", "%=", "**=", "//=",                 \
                             "<<", ">>", "<<=", ">>=",                                   \
                             "=", "==", "!=", ">", "<", "&", ".", "++", "--", "<=", ">="
-#define SEPARATORS          "\n", "(", ")", "[", "]", ","
+#define SEPARATORS          "\n", "(", ")", "[", "]", "<", ">", ","
 #define WORD_OPERATORS      "and", "or", "in", "xor", "not", "is"
 
 #include <string>
