@@ -10,6 +10,8 @@ class Parser {
 
         ~Parser();
 
+        void test();
+
 
 
     private:

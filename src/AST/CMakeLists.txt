@@ -1,0 +1,1 @@
+add_library (ast ASTProgram.cpp ASTStatement.cpp ASTExpression.cpp ASTType.cpp)

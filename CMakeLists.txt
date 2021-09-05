@@ -11,11 +11,11 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -Wall -Wall -Werror -Wshadow -Wdou
 
 include_directories(${PROJECT_SOURCE_DIR})
 
-add_subdirectory(src/lib)
+add_subdirectory(src)
 
-# add the executable
-add_executable(rattle src/Token.cpp src/Lexer.cpp src/Compiler.cpp src/main.cpp src/Parser.cpp src/AST.cpp)
+add_executable(rattle ${SOURCES})
 
+target_link_libraries(rattle PUBLIC ast)
 target_link_libraries(rattle PUBLIC libs)
 
 IF(CMAKE_BUILD_TYPE MATCHES DEBUG)

@@ -1,6 +1,7 @@
 #include "Lexer.hpp"
 #include "Compiler.hpp"
 #include "utils.hpp"
+#include "Parser.hpp"
 
 bool Compiler::compile(string *fileName) {
     string *src = nullptr;
@@ -30,6 +31,8 @@ bool Compiler::compile(string *fileName) {
 queue<Token *> *Compiler::parse(string *src) {
     auto *tokens = new queue<Token *>();
     auto *lexer = new Lexer(src);
+    auto* parser = new Parser(lexer);
+    parser->test();
     Token *currentToken = nullptr;
     do {
         currentToken = lexer->nextToken();
@@ -41,5 +44,4 @@ queue<Token *> *Compiler::parse(string *src) {
         currentToken->print(lexer->getCurrentIndent());
     } while (currentToken->type != TokenType::TOKEN_EOF);
     return tokens;
-    return nullptr;
 }

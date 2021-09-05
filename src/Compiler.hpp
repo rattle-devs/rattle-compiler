@@ -3,7 +3,7 @@
 
 #include <queue>
 #include "Token.hpp"
-#include "AST.hpp"
+#include "src/AST/ASTProgram.hpp"
 
 class Compiler {
     public:
